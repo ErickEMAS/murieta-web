@@ -1,0 +1,53 @@
+p {
+    color: #bf1650;
+}
+
+h3 {
+    color: #bf1650;
+}
+
+.spacing{
+    height: 16px;
+}
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
+    -webkit-text-fill-color: #FFFFFF;
+    -webkit-box-shadow: 0 0 0 100px #2B3036 inset !important;
+    background-color: #bf1650;
+}
+
+.MuiOutlinedInput-input:-webkit-autofill {
+    border-radius: 10px !important;
+}
+
+.container-signup{
+    background-color: #373C41;
+    border-radius: 25px;
+    height: 90vh;
+    width: 20vw;
+}
+
+.content-signup{
+    width: 20vw;
+    margin: 16px;
+}
+
+.title{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 64px;
+    line-height: 75px;
+    margin-bottom: 17vh;
+    color: #FFFFFF;
+}
+
+.link{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    color: #E8BC8E;
+    text-align: center;
+}

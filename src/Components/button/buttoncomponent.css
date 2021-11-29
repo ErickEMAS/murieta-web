@@ -1,0 +1,16 @@
+.button{
+    background-color: #8CCFE7 !important;
+    border-radius: 10px !important;
+}
+
+.button span {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 28px;
+    text-align: center;
+    color: #000000;
+    margin: 6px 0;
+    text-transform: none !important;
+}
