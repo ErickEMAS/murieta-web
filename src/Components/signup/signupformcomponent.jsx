@@ -2,42 +2,53 @@ import api from '../../services/api'
 import { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useHistory, Link } from "react-router-dom"
-import styled from 'styled-components';
 import { TextField, NoSsr, Grid } from '@material-ui/core';
-
-import "./signupformcomponent.css"
+import { makeStyles } from '@material-ui/core/styles';
 import ButtonComponent from '../button/buttoncomponent';
 
-const StyledTextField = styled(TextField)`
-  label{
-    color: #FFFFFF;
-  }
-  input{
-    color: #FFFFFF;
-    border-radius: 10px;
-    width: 364px;
-    background-color: #2B3036;
-  }
-  label.Mui-focused {
-    color: #8CCFE7;
-  }
-  .MuiInputLabel-shrink {
-    color: #8CCFE7;
-  }
-  .MuiOutlinedInput-root {
-    fieldset {
-      border: none;
-    }
-    &:hover fieldset {
-      border: none;
-    }
-    &.Mui-focused fieldset {
-      border: none;
-    }
-  }
-`;
+const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: "#373C41",
+    borderRadius: "25px",
+    height: "90vh",
+    width: "20vw",
+    "& p, h3": {
+      color: "#bf1650",
+    },
+  },
+
+  contentSignup: {
+    width: "17vw",
+  },
+
+  title: {
+    fontFamily: "Roboto",
+    fontStyle: "normal",
+    fontWeight: "normal",
+    fontSize: "64px",
+    lineHeight: "75px",
+    marginBottom: "17vh",
+    color: "#FFFFFF",
+  },
+
+  link: {
+    fontFamily: "Roboto",
+    fontStyle: "normal",
+    fontWeight: "normal",
+    fontSize: "18px",
+    lineHeight: "21px",
+    color: "#E8BC8E",
+    textAlign: "center",
+    margin: "16px",
+  },  
+  
+    spacing: {
+      height: "16px",
+    },
+}));
 
 const SignUpFormComponent = () => {
+  const classes = useStyles();
   var history = useHistory()
   var [error, setError] = useState("");
   const headers = {
@@ -77,26 +88,26 @@ const SignUpFormComponent = () => {
   
   return (
     <Grid
-      className="container-signup"
+      className={classes.root}
       container
       direction="column"
       justifyContent="center"
       alignItems="center"
     >
       <Grid item>
-        <div className="content-signup">
-          <h1 className="title">Sign-Up</h1>
+        <div className={classes.contentSignup}>
+          <h1 className={classes.title}>Sign-Up</h1>
           <form onSubmit={handleSubmit(onSubmit)}>
               <NoSsr>
-              <StyledTextField fullWidth variant="outlined" label="nome"
+              <TextField fullWidth variant="outlined" label="nome"
                 {...register("name", {
                   required: "Nome obrigatório",
                 })}
               />
 
-              {errors.name == undefined ? <p className="spacing"></p> : <p>{errors.name.message}</p>}
+              {errors.name == undefined ? <p className={classes.spacing}></p> : <p>{errors.name.message}</p>}
 
-              <StyledTextField fullWidth variant="outlined" label="email"  {...register("email", {
+              <TextField fullWidth variant="outlined" label="email"  {...register("email", {
                 required: "E-mail obrigatório",
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -104,17 +115,17 @@ const SignUpFormComponent = () => {
                 }})} 
               />
               
-              {errors.email == undefined ? <p className="spacing"></p> :  <p>{errors.email.message}</p>}
+              {errors.email == undefined ? <p className={classes.spacing}></p> :  <p>{errors.email.message}</p>}
 
-              <StyledTextField fullWidth variant="outlined" label="senha"
+              <TextField fullWidth variant="outlined" label="senha"
                 {...register("senha", {
                   required: "Senha obrigatório",
                 })}
               />
 
-              {errors.senha == undefined ? <p className="spacing"></p> : <p>{errors.senha.message}</p>}
+              {errors.senha == undefined ? <p className={classes.spacing}></p> : <p>{errors.senha.message}</p>}
 
-              <StyledTextField fullWidth variant="outlined" label="confirmar senha"
+              <TextField fullWidth variant="outlined" label="confirmar senha"
                 {...register("confirmar_senha", {
                   required: "Confirmação de senha obrigatório",
                   minLength: { value: 6, message: "Muito curto" },
@@ -124,7 +135,7 @@ const SignUpFormComponent = () => {
                 })}
               />
               
-              {errors.confirmar_senha == undefined ? <p className="spacing"></p> :  <p>{errors.confirmar_senha.message}</p>} 
+              {errors.confirmar_senha == undefined ? <p className={classes.spacing}></p> :  <p>{errors.confirmar_senha.message}</p>} 
 
               </NoSsr>
               <h3>{error}</h3>
@@ -134,7 +145,7 @@ const SignUpFormComponent = () => {
 
         </div >
       </Grid>
-      <Link className="link" to="/signup">Login</Link>
+      <Link className={classes.link} to="/login">Login</Link>
     </Grid>
     );
   };

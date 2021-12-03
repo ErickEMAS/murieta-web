@@ -1,15 +1,20 @@
-import { Component } from 'react'
-import LoginPage from '../pages/login/login'
+import { useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { isAuthenticated } from '../services/auth'
 
-function IsAutenticatedHOC(WrappedComponent) {
-    return class extends Component{
-        render() {
-            return !isAuthenticated()
-            ? <LoginPage/>
-            : <WrappedComponent {...this.props}/>
-        }
+function withIsAutenticatedHOC(WrappedComponent) {
+    
+    return (props) => {
+        const history = useHistory();
+
+        useEffect(() => {
+            if (!isAuthenticated()) {
+                history.push("/login");
+            }
+        }, []);
+
+        return <WrappedComponent {...props}/>
     }
 }
 
-export default IsAutenticatedHOC;
+export default withIsAutenticatedHOC;

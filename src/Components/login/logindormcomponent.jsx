@@ -2,43 +2,74 @@ import api from '../../services/api'
 import { login } from '../../services/auth'
 import { useForm } from "react-hook-form";
 import { useHistory, Link } from "react-router-dom"
-import styled from 'styled-components';
 import { TextField, NoSsr, Grid } from '@material-ui/core';
-
-import "./logindormcomponent.css"
 import ButtonComponent from '../button/buttoncomponent';
+import { makeStyles } from '@material-ui/core/styles';
 
-const StyledTextField = styled(TextField)`
-  label{
-    color: #FFFFFF;
-  }
-  input{
-    color: #FFFFFF;
-    border-radius: 10px;
-    width: 364px;
-    background-color: #2B3036;
-  }
-  label.Mui-focused {
-    color: #8CCFE7;
-  }
-  .MuiInputLabel-shrink {
-    color: #8CCFE7;
-  }
-  .MuiOutlinedInput-root {
-    fieldset {
-      border: none;
-    }
-    &:hover fieldset {
-      border: none;
-    }
-    &.Mui-focused fieldset {
-      border: none;
-    }
-  }
-`;
+const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: "#373C41",
+    borderRadius: "25px",
+    height: "90vh",
+    width: "20vw",
+    "& p": {
+      color: "#bf1650",
+    },
+  },
+
+  contentLogin: {
+    width: "17vw",
+  },
+
+  title: {
+    fontFamily: "Roboto",
+    fontStyle: "normal",
+    fontWeight: "normal",
+    fontSize: "64px",
+    lineHeight: "75px",
+    marginBottom: "17vh",
+    color: "#FFFFFF",
+  },
+
+  forgot : {
+    "& p": {
+      textAlign: "end",
+      color: "#FFFFFF",
+      fontFamily: "Roboto",
+      fontStyle: "normal",
+      fontWeight: "normal",
+      fontSize: "18px",
+      lineHeight: "21px",
+      marginBottom: "12vh !important",
+    },
+  },
+
+  form: {
+    "& p": {
+      marginLeft: "16px",
+      marginBottom: "16px",
+    },
+  },
+
+  link: {
+    fontFamily: "Roboto",
+    fontStyle: "normal",
+    fontWeight: "normal",
+    fontSize: "18px",
+    lineHeight: "21px",
+    color: "#E8BC8E",
+    textAlign: "center",
+    margin: "16px",
+  },  
+  
+    spacing: {
+      height: "16px",
+    },
+}));
 
 const LoginFormComponent = () => {
-  var history = useHistory()
+  const classes = useStyles();
+  const history = useHistory()
   const headers = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
@@ -51,7 +82,7 @@ const LoginFormComponent = () => {
     } = useForm();
 
   const onSubmit = (data) => {
-    var body = {
+    const body = {
       "email": data['email'],
       "password": data['senha']
     }
@@ -60,29 +91,27 @@ const LoginFormComponent = () => {
       .post("/login", body, headers)
       .then((response) => {
         login(response.data);
-        console.log(response.data)
         history.go(0)
       })
       .catch((err) => {
         console.error("ops! ocorreu um erro" + err);
       });
-    // console.log(data);
   };
   
   return (
     <Grid
-      className="container-login"
+      className={classes.root}
       container
       direction="column"
       justifyContent="center"
       alignItems="center"
     >
       <Grid item>
-        <div className="content-login">
-          <h1 className="title">Login</h1>
-          <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={classes.contentLogin}>
+          <h1 className={classes.title}>Login</h1>
+          <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
               <NoSsr>
-                <StyledTextField fullWidth label="E-mail" variant="outlined" {...register("email", {
+                <TextField fullWidth label="E-mail" variant="outlined" {...register("email", {
                   required: "E-mail obrigatório",
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -90,18 +119,18 @@ const LoginFormComponent = () => {
                   }})} 
               />
                 
-              {errors.email == undefined ? <p className="spacing"></p> : <p>{errors.email.message}</p>}
+              {errors.email == undefined ? <p className={classes.spacing}></p> : <p>{errors.email.message}</p>}
 
-              <StyledTextField fullWidth variant="outlined" label="senha"
+              <TextField fullWidth variant="outlined" label="senha"
                 {...register("senha", {
                   required: "Campo obrigatório",
                 })}
               />
-              {errors.senha == undefined ? <div className="spacing"></div> : <p>{errors.senha.message}</p>} 
+              {errors.senha == undefined ? <div className={classes.spacing}></div> : <p>{errors.senha.message}</p>} 
 
               </NoSsr>
 
-              <div className="forgot">
+              <div className={classes.forgot}>
                 <p>Esqueci minha senha</p>
               </div>
 
@@ -110,7 +139,7 @@ const LoginFormComponent = () => {
 
         </div >
       </Grid>
-      <Link className="link" to="/signup">Cadastrar-se</Link>
+      <Link className={classes.link} to="/signup">Cadastrar-se</Link>
     </Grid>
     );
   };
