@@ -15,6 +15,9 @@ export default createTheme({
             root: {
                 borderRadius: "10px",
                 backgroundColor: "#2B3036",
+                "& h3": {
+                    color: "#bf1650",
+                },
                 "& fieldset": {
                     border: "none",
                 },

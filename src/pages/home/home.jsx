@@ -5,8 +5,6 @@ import NavbarComponent from '../../Components/nabbar/navbar_component';
 import { makeStyles } from '@material-ui/core/styles';
 let viewportHeight = window.innerHeight;
 
-console.log(viewportHeight);
-
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",

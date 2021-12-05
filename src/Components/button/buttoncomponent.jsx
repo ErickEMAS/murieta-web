@@ -1,3 +1,4 @@
+import { CircularProgress } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -29,12 +30,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ButtonComponent = ({ submit, title }) => {
+const ButtonComponent = ({ submit, title, loading }) => {
     const classes = useStyles();
 
     return (
         <Button fullWidth className={classes.button} variant="contained" type="submit">
-            {title}
+            {loading && <CircularProgress size={24}/>}{!loading && title}
         </Button>
 
     );

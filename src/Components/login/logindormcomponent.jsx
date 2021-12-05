@@ -1,5 +1,3 @@
-import api from '../../services/api'
-import { login } from '../../services/auth'
 import { useForm } from "react-hook-form";
 import { useHistory, Link } from "react-router-dom"
 import { TextField, NoSsr, Grid } from '@material-ui/core';
@@ -67,37 +65,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const LoginFormComponent = () => {
+const LoginFormComponent = ( props ) => {
   const classes = useStyles();
-  const history = useHistory()
-  const headers = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-  }
+  const history = useHistory();
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const {
-      register,
-      handleSubmit,
-      formState: { errors }
-    } = useForm();
-
-  const onSubmit = (data) => {
-    const body = {
-      "email": data['email'],
-      "password": data['senha']
-    }
-
-    api
-      .post("/login", body, headers)
-      .then((response) => {
-        login(response.data);
-        history.go(0)
-      })
-      .catch((err) => {
-        console.error("ops! ocorreu um erro" + err);
-      });
-  };
-  
   return (
     <Grid
       className={classes.root}
@@ -109,7 +81,7 @@ const LoginFormComponent = () => {
       <Grid item>
         <div className={classes.contentLogin}>
           <h1 className={classes.title}>Login</h1>
-          <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+          <form className={classes.form} onSubmit={handleSubmit(props.onSubmit)}>
               <NoSsr>
                 <TextField fullWidth label="E-mail" variant="outlined" {...register("email", {
                   required: "E-mail obrigatório",
@@ -122,11 +94,11 @@ const LoginFormComponent = () => {
               {errors.email == undefined ? <p className={classes.spacing}></p> : <p>{errors.email.message}</p>}
 
               <TextField fullWidth variant="outlined" label="senha"
-                {...register("senha", {
+                {...register("password", {
                   required: "Campo obrigatório",
                 })}
               />
-              {errors.senha == undefined ? <div className={classes.spacing}></div> : <p>{errors.senha.message}</p>} 
+              {errors.password == undefined ? <div className={classes.spacing}></div> : <p>{errors.password.message}</p>} 
 
               </NoSsr>
 
@@ -134,7 +106,7 @@ const LoginFormComponent = () => {
                 <p>Esqueci minha senha</p>
               </div>
 
-              <ButtonComponent title="Login" />
+              <ButtonComponent loading={props.loading} title="Login" />
             </form>
 
         </div >
